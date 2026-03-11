@@ -95,13 +95,20 @@
 
                         @if(Auth::user()->role == "admin")
                         <!-- Sidenav Menu Heading (Core)-->
-                        <div class="sidenav-menu-heading">Kampanye</div>
+                        <div class="sidenav-menu-heading">Management Data</div>
 
                         <!-- Sidenav Accordion (Campaigns)-->
                         <a class="nav-link collapsed {{ Request::segment(1) == 'campaigns' ? 'active' : '' }}"
                             href="{{ url('/campaigns') }}">
                             <div class="nav-link-icon"><i class="bi bi-megaphone"></i></div>
                             Daftar Kampanye
+                        </a>
+
+                        <!-- Sidenav Accordion (Donations)-->
+                        <a class="nav-link collapsed {{ Request::segment(1) == 'donations' ? 'active' : '' }}"
+                            href="{{ url('/donations') }}">
+                            <div class="nav-link-icon"><i class="bi bi-heart-fill"></i></div>
+                            Daftar Donasi
                         </a>
                         @endif
 
@@ -187,7 +194,7 @@
 
     @endif
 
-    @if(Request::segment(1) == 'campaigns')
+    @if(Request::segment(1) == 'campaigns' || Request::segment(1) == 'donations')
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/datatables/datatables-simple-demo.js') }}"></script>

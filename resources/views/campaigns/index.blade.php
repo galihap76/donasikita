@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Daftar Kasir - ' . env('APP_NAME'))
+@section('title', 'Daftar Kampanye - ' . env('APP_NAME'))
 
 @section('content')
 
