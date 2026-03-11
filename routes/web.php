@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DonationController;
 use App\Models\User;
 use App\Mail\ResetPasswordSuccess;
 use App\Http\Controllers\EmailVerificationController;
@@ -17,8 +18,8 @@ use App\Http\Controllers\EmailVerificationController;
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
-
     Route::resource('campaigns', CampaignController::class);
+    Route::get('/donations', [DonationController::class, 'index']);
 
     Route::get('/email/verify', function () {
         return view('auth.verify-email');

@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Campaign extends Model
 {
     protected $primaryKey = 'campaign_id';
+    protected $table = 'campaigns';
     protected $guarded = [];
 }
