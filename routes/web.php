@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DashboardController;
 use App\Models\User;
 use App\Mail\ResetPasswordSuccess;
@@ -16,6 +17,8 @@ use App\Http\Controllers\EmailVerificationController;
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    Route::resource('campaigns', CampaignController::class);
 
     Route::get('/email/verify', function () {
         return view('auth.verify-email');
@@ -31,7 +34,7 @@ Route::middleware('auth')->group(function () {
         return back()->with('message', 'Verifikasi telah berhasil dikirim.');
     })->middleware('throttle:3,1')->name('verification.send');
 
-    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::middleware('guest')->group(function () {

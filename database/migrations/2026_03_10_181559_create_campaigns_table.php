@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description');
-            $table->bigInteger('target_amount');
-            $table->bigInteger('collected_amount')->default(0);
+            $table->decimal('target_amount', total: 15, places: 0);
+            $table->decimal('collected_amount', total: 15, places: 0)->nullable();
             $table->string('image')->nullable();
             $table->enum('status', ['active', 'closed'])->default('active');
             $table->timestamps();
