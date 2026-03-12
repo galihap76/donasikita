@@ -39,8 +39,10 @@
 
                 <div class="card-body">
 
+                    @if(Auth::user()->role == 'admin')
                     <a href="{{ route('campaigns.create') }}" class="btn btn-success mb-4"><i
                             class="bi bi-plus-circle me-1"></i> Tambah Kampanye</a>
+                    @endif
 
                     <table id="datatablesSimple">
                         <thead>
@@ -78,6 +80,8 @@
                                 <td>
 
                                     <div class="d-flex justify-content-center">
+
+                                        @if(Auth::user()->role == 'admin')
                                         <form action="{{ route('campaigns.destroy', $item->campaign_id) }}"
                                             method="post" class="d-flex gap-2 form-id-{{ $item->campaign_id }}">
 
@@ -100,6 +104,19 @@
                                             </button>
 
                                         </form>
+
+                                        @elseif(Auth::user()->role == 'user')
+                                        <a href="{{ route('campaigns.show', $item->campaign_id) }}"
+                                            class="btn btn-primary">
+                                            <i class="bi bi-eye-fill me-1"></i> Lihat
+                                        </a>
+
+                                        <a href="{{ route('donations.create', $item->slug) }}"
+                                            class="btn btn-success ms-3">
+                                            <i class="bi bi-cash-coin me-1"></i> Donasi
+                                        </a>
+                                        @endif
+
                                     </div>
 
                                 </td>

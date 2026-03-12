@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description');
             $table->decimal('target_amount', total: 15, places: 0);
-            $table->decimal('collected_amount', total: 15, places: 0)->nullable();
+            $table->decimal('collected_amount', total: 15, places: 0)->default(0);
             $table->string('image')->nullable();
             $table->enum('status', ['active', 'closed'])->default('active');
             $table->timestamps();

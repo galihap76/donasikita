@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('amount', total: 15, places: 0);
             $table->text('message')->nullable();
             $table->tinyInteger('is_anonymous');
-            $table->enum('status', ['pending', 'paid', 'failed']);
+            $table->enum('status', ['pending', 'success', 'failed']);
             $table->string('payment_reference')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('campaign_id')->references('campaign_id')->on('campaigns')->onDelete('cascade');
