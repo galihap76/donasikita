@@ -19,6 +19,7 @@ class CampaignController extends Controller
         $campaigns = Campaign::select(
             'campaign_id',
             'title',
+            'slug',
             'target_amount',
             'collected_amount',
             'status'

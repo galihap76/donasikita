@@ -18,8 +18,23 @@ use App\Http\Controllers\EmailVerificationController;
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
+
     Route::resource('campaigns', CampaignController::class);
-    Route::get('/donations', [DonationController::class, 'index']);
+
+    // Berikan akses user hanya index dan show pada menu produk
+    Route::resource('campaigns', CampaignController::class, ['except' => ['index', 'show']])->middleware('admin');
+
+    Route::controller(DonationController::class)->group(function () {
+        Route::get('/donations', 'index')->middleware('admin');
+        Route::get('/campaign/{slug}/donate', 'create')
+            ->middleware('user')
+            ->name('donations.create');
+
+        Route::post('/campaigns/{slug}/donate', [DonationController::class, 'store'])
+            ->name('donations.store');
+
+        Route::get('/donation-histories', 'donationHistory');
+    });
 
     Route::get('/email/verify', function () {
         return view('auth.verify-email');

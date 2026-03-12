@@ -47,11 +47,13 @@
             <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
                 <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
                     href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"><img class="img-fluid" src="#" /></a>
+                    aria-expanded="false"><img class="img-fluid"
+                        src="{{ Auth::user()->role == 'admin' ? asset('assets/img/admin.png') : asset('assets/img/user.png') }}" /></a>
                 <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
                     aria-labelledby="navbarDropdownUserImage">
                     <h6 class="dropdown-header d-flex align-items-center">
-                        <img class="dropdown-user-img" src="#" />
+                        <img class="dropdown-user-img"
+                            src="{{ Auth::user()->role == 'admin' ? asset('assets/img/admin.png') : asset('assets/img/user.png') }}" />
                         <div class="dropdown-user-details">
                             <div class="dropdown-user-details-name">{{ Auth::user()->name }}</div>
                             <div class="dropdown-user-details-email">{{ Auth::user()->email }}</div>
@@ -93,22 +95,31 @@
                             Dashboard
                         </a>
 
-                        @if(Auth::user()->role == "admin")
                         <!-- Sidenav Menu Heading (Core)-->
-                        <div class="sidenav-menu-heading">Management Data</div>
+                        <div class="sidenav-menu-heading"> {{ Auth::user()->role == 'admin' ? 'Kelola Data' :
+                            'Aktivitas' }}</div>
 
                         <!-- Sidenav Accordion (Campaigns)-->
-                        <a class="nav-link collapsed {{ Request::segment(1) == 'campaigns' ? 'active' : '' }}"
+                        <a class="nav-link collapsed {{ Request::segment(1) == 'campaigns' || Request::segment(3) == 'donate' ? 'active' : '' }}"
                             href="{{ url('/campaigns') }}">
                             <div class="nav-link-icon"><i class="bi bi-megaphone"></i></div>
                             Daftar Kampanye
                         </a>
 
+                        @if(Auth::user()->role == 'admin')
                         <!-- Sidenav Accordion (Donations)-->
                         <a class="nav-link collapsed {{ Request::segment(1) == 'donations' ? 'active' : '' }}"
                             href="{{ url('/donations') }}">
                             <div class="nav-link-icon"><i class="bi bi-heart-fill"></i></div>
                             Daftar Donasi
+                        </a>
+                        @endif
+
+                        @if(Auth::user()->role == 'user')
+                        <a class="nav-link collapsed {{ Request::path() == 'donation-histories' ? 'active' : '' }}"
+                            href="{{ url('/donation-histories') }}">
+                            <div class="nav-link-icon"><i class="bi bi-clock-history"></i></div>
+                            Riwayat Donasi
                         </a>
                         @endif
 
@@ -194,7 +205,8 @@
 
     @endif
 
-    @if(Request::segment(1) == 'campaigns' || Request::segment(1) == 'donations')
+    @if(Request::segment(1) == 'campaigns' || Request::segment(1) == 'donations'
+    || Request::path() == 'donation-histories')
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/datatables/datatables-simple-demo.js') }}"></script>
