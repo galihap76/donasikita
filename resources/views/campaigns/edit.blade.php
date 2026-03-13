@@ -36,7 +36,7 @@
             <!-- Default Bootstrap Form Controls-->
             <div id="default">
                 <div class="card mb-4">
-                    <div class="card-header">Form Edit Kampanye</div>
+                    <div class="card-header text-dark">Form Edit Kampanye</div>
 
                     <div class="card-body">
 

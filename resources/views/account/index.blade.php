@@ -40,7 +40,7 @@
         <div class="col">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Informasi Akun</div>
+                <div class="card-header text-dark">Informasi Akun</div>
                 <div class="card-body">
                     <form action="{{ url('/account-process') }}" method="post">
                         @csrf

@@ -49,7 +49,31 @@ class DashboardController extends Controller
                 'monthlyDonations'
             ));
         } else if ($role == 'user') {
-            return view('dashboard.index');
+
+            $user_id = Auth::user()->id;
+
+            $totalDonations = Donation::where('user_id', $user_id)
+                ->where('status', 'success')
+                ->sum('amount');
+
+            $countSuccessDonations = Donation::where('user_id', $user_id)
+                ->where('status', 'success')
+                ->count('donation_id');
+
+            $countPendingDonations = Donation::where('user_id', $user_id)
+                ->where('status', 'pending')
+                ->count('donation_id');
+
+            $countFailedDonations = Donation::where('user_id', $user_id)
+                ->where('status', 'failed')
+                ->count('donation_id');
+
+            return view('dashboard.index', compact(
+                'totalDonations',
+                'countSuccessDonations',
+                'countPendingDonations',
+                'countFailedDonations'
+            ));
         }
     }
 }

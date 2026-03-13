@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col mb-4">
             <div class="card mb-4">
-                <div class="card-header">Daftar Pesan</div>
+                <div class="card-header text-dark">Daftar Pesan</div>
 
                 <div class="card-body">
 
