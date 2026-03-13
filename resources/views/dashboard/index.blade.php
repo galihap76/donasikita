@@ -109,12 +109,101 @@
 
     <!-- Area chart example-->
     <div class="card mb-4">
-        <div class="card-header">Grafik Donasi Bulanan</div>
+        <div class="card-header text-dark">Grafik Donasi Bulanan</div>
         <div class="card-body">
             <div class="chart-area"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
         </div>
         <div class="card-footer small text-muted"> Data donasi tahun {{ date('Y') }}.</div>
     </div>
+    @endif
+
+    @if(Auth::user()->role == 'user')
+
+    <!-- Example Colored Cards for Dashboard Demo-->
+    <div class="row">
+        <div class="col-lg-3 col-xl-3 mb-4">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="me-3">
+                            <div class="text-white-75 small">Total Donasi Anda </div>
+                            <div class="text-lg fw-bold">Rp {{ number_format($totalDonations, 0, ',', '.') }}</div>
+                        </div>
+                        <i class="bi bi-cash-stack text-white-50" style="font-size: 30px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-xl-3 mb-4">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="me-3">
+                            <div class="text-white-75 small">
+                                Jumlah Donasi Sukses</div>
+                            <div class="text-lg fw-bold">{{ $countSuccessDonations }}
+                            </div>
+                        </div>
+                        <i class="bi bi-check-circle text-white-50" style="font-size: 30px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-xl-3 mb-4">
+            <div class="card bg-warning text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="me-3">
+                            <div class="text-white-75 small">Jumlah Donasi Pending </div>
+                            <div class="text-lg fw-bold">{{ $countPendingDonations }}
+                            </div>
+                        </div>
+                        <i class="bi bi-clock-history text-white-50" style="font-size: 30px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-xl-3 mb-4">
+            <div class="card bg-danger text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="me-3">
+                            <div class="text-white-75 small">Jumlah Donasi Failed</div>
+                            <div class="text-lg fw-bold">{{ $countFailedDonations }}
+                            </div>
+                        </div>
+                        <i class="bi bi-x-circle text-white-50" style="font-size: 30px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xxl-4 col-xl-12 mb-4">
+            <div class="card h-100">
+                <div class="card-body h-100 p-5">
+                    <div class="row align-items-center">
+                        <div class="col-xl-8 col-xxl-12">
+                            <div class="text-center text-xl-start text-xxl-center mb-4 mb-xl-0 mb-xxl-4">
+                                <h1 class="text-dark">Selamat datang {{ trim(explode(' ', Auth::user()->name)[0]) }}!
+                                </h1>
+                                <p class="text-gray-700 mb-0">Yuk, jadilah bagian dari kebaikan dengan berdonasi melalui
+                                    <strong>DonasiKita</strong> untuk membantu mereka yang membutuhkan.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-xxl-12 text-center"><img class="img-fluid"
+                                src="assets/img/illustrations/at-work.svg" style="max-width: 26rem" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @endif
 
 </div>

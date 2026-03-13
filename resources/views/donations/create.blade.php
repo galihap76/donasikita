@@ -45,7 +45,7 @@
             <!-- Default Bootstrap Form Controls-->
             <div id="default">
                 <div class="card mb-4">
-                    <div class="card-header">Form Donasi Kampanye</div>
+                    <div class="card-header text-dark">Form Donasi Kampanye</div>
 
                     <div class="card-body">
 
@@ -172,7 +172,7 @@
         <div class="col-lg-4">
 
             <div class="card mb-4 sticky-top">
-                <div class="card-header">Informasi Kampanye</div>
+                <div class="card-header text-dark">Informasi Kampanye</div>
 
                 <div class="card-body">
 
