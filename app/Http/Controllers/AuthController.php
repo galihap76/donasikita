@@ -67,14 +67,18 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name'  => 'required|max:50',
             'email' => 'required|unique:users|email:rfc,dns',
+            'phone_number' => 'required|unique:users|regex:/^\+628[1-9][0-9]{7,10}$/',
             'password' => 'required|min:10|confirmed',
             'password_confirmation' => 'required'
         ], [
             'name.required' => 'Nama tidak boleh kosong.',
             'name.max' => 'Nama tidak boleh lebih dari :max karakter.',
             'email.required' => 'Email tidak boleh kosong.',
-            'email.unique' => 'Email tidak valid.',
+            'email.unique' => 'Email tidak dapat digunakan.',
             'email.email' => 'Form email tidak valid.',
+            'phone_number.required' => 'No telepon tidak boleh kosong.',
+            'phone_number.unique' => 'No telepon tidak dapat digunakan.',
+            'phone_number.regex' => 'Format no telepon tidak valid.',
             'password.required' => 'Password tidak boleh kosong.',
             'password.min' => 'Password minimal 10 karakter.',
             'password.confirmed' => 'Konfirmasi password tidak sesuai.',
@@ -91,6 +95,7 @@ class AuthController extends Controller
                 'name' => trim(ucwords($request->input('name'))),
                 'email' => trim($request->input('email')),
                 'password' => Hash::make($request->input('password')),
+                'phone_number' => $request->input('phone_number'),
                 'role' => 'user'
             ]);
 
