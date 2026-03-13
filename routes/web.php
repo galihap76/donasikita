@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
@@ -9,20 +10,30 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DonationController;
 use App\Models\User;
 use App\Mail\ResetPasswordSuccess;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\LandingPageController;
 
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/messages', [ContactController::class, 'index'])->middleware('admin');
 
-    Route::resource('campaigns', CampaignController::class);
+    // User sudah login hanya bisa melihat daftar campaign
+    Route::get('campaigns', [CampaignController::class, 'index'])
+        ->name('campaigns.index');
 
-    // Berikan akses user hanya index dan show pada menu produk
-    Route::resource('campaigns', CampaignController::class, ['except' => ['index', 'show']])->middleware('admin');
+    // Admin routes
+    Route::middleware('admin')->group(function () {
+
+        // Except -> biar role User bisa akses index dan show
+        Route::resource('campaigns', CampaignController::class)
+            ->except(['index', 'show']);
+    });
 
     Route::controller(DonationController::class)->group(function () {
         Route::get('/donations', 'index')->middleware('admin');
@@ -33,7 +44,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/campaigns/{slug}/donate', [DonationController::class, 'store'])
             ->name('donations.store');
 
-        Route::get('/donation-histories', 'donationHistory');
+        Route::get('/donation-histories', 'donationHistories');
     });
 
     Route::get('/email/verify', function () {
@@ -49,6 +60,11 @@ Route::middleware('auth')->group(function () {
 
         return back()->with('message', 'Verifikasi telah berhasil dikirim.');
     })->middleware('throttle:3,1')->name('verification.send');
+
+    Route::controller(AccountController::class)->group(function () {
+        Route::get('/account',  'index');
+        Route::post('/account-process', 'accountProcess');
+    });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
@@ -128,3 +144,10 @@ Route::middleware('guest')->group(function () {
             : back()->withErrors(['email' => [__($status)]]);
     })->name('password.update');
 });
+
+// Public route
+Route::get('/', [LandingPageController::class, 'index']);
+Route::post('/add-message', [ContactController::class, 'store']);
+Route::get('/list-campaigns', [CampaignController::class, 'listCampaigns']);
+Route::get('campaigns/{slug}', [CampaignController::class, 'show'])
+    ->name('campaigns.show');

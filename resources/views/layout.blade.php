@@ -5,11 +5,26 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Platfrom web donasi" />
+    <meta name="description"
+        content="DonasiKita memudahkan Anda berbagi kebaikan melalui donasi online yang cepat, aman, dan transparan." />
     <meta name="author" content="Galih Anggoro Prasetya" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Open Graph untuk preview link -->
+    <meta property="og:title" content="DonasiKita - Donasi online yang cepat, aman, dan transparan" />
+    <meta property="og:description"
+        content="DonasiKita memudahkan Anda berbagi kebaikan melalui donasi online yang cepat, aman, dan transparan." />
+    <meta property="og:image" content="{{ asset('assets/img/preview-logo.png') }}" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:type" content="website" />
+
+    <!-- Untuk Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DonasiKita - Donasi online yang cepat, aman, dan transparan" />
+    <meta name="twitter:description"
+        content="DonasiKita memudahkan Anda berbagi kebaikan melalui donasi online yang cepat, aman, dan transparan." />
+    <meta name="twitter:image" content="{{ asset('assets/img/preview-logo.png') }}" />
 
     <title>@yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
@@ -96,8 +111,7 @@
                         </a>
 
                         <!-- Sidenav Menu Heading (Core)-->
-                        <div class="sidenav-menu-heading"> {{ Auth::user()->role == 'admin' ? 'Kelola Data' :
-                            'Aktivitas' }}</div>
+                        <div class="sidenav-menu-heading"> Aktivitas</div>
 
                         <!-- Sidenav Accordion (Campaigns)-->
                         <a class="nav-link collapsed {{ Request::segment(1) == 'campaigns' || Request::segment(3) == 'donate' ? 'active' : '' }}"
@@ -112,6 +126,12 @@
                             href="{{ url('/donations') }}">
                             <div class="nav-link-icon"><i class="bi bi-heart-fill"></i></div>
                             Daftar Donasi
+                        </a>
+
+                        <a class="nav-link collapsed {{ Request::path() == 'messages' ? 'active' : '' }}"
+                            href="{{ url('/messages') }}">
+                            <div class="nav-link-icon"><i class="bi bi-chat-left-text-fill"></i></div>
+                            Daftar Pesan
                         </a>
                         @endif
 
@@ -153,7 +173,9 @@
     @if(Request::path() == 'dashboard')
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
-    {{-- <script>
+
+    @if(Auth::user()->role == 'admin')
+    <script>
         var ctx = document.getElementById("myAreaChart");
         var myLineChart = new Chart(ctx, {
             type: "line",
@@ -163,7 +185,7 @@
                     "Jul","Aug","Sep","Oct","Nov","Dec"
                 ],
                 datasets: [{
-                    label: "Penjualan",
+                    label: "Donasi",
                     lineTension: 0.3,
                     backgroundColor: "rgba(0, 97, 242, 0.05)",
                     borderColor: "rgba(0, 97, 242, 1)",
@@ -175,7 +197,7 @@
                     pointHoverBorderColor: "rgba(0, 97, 242, 1)",
                     pointHitRadius: 10,
                     pointBorderWidth: 2,
-                    data: @json($monthlySales)
+                    data: @json($monthlyDonations)
                 }]
             },
             options: {
@@ -201,12 +223,13 @@
                 }
             }
         });
-    </script> --}}
+    </script>
+    @endif
 
     @endif
 
     @if(Request::segment(1) == 'campaigns' || Request::segment(1) == 'donations'
-    || Request::path() == 'donation-histories')
+    || Request::path() == 'donation-histories' || Request::path() == 'messages')
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/datatables/datatables-simple-demo.js') }}"></script>

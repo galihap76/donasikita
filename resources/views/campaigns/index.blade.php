@@ -106,8 +106,7 @@
                                         </form>
 
                                         @elseif(Auth::user()->role == 'user')
-                                        <a href="{{ route('campaigns.show', $item->campaign_id) }}"
-                                            class="btn btn-primary">
+                                        <a href="{{ route('campaigns.show', $item->slug) }}" class="btn btn-primary">
                                             <i class="bi bi-eye-fill me-1"></i> Lihat
                                         </a>
 

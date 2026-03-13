@@ -79,9 +79,9 @@
 
                                     <div class="d-flex justify-content-center">
 
-                                        @if($item->status == 'success')
+                                        @if($item->status == 'pending')
                                         <a href="#" class="btn btn-danger">
-                                            <i class="bi bi-filetype-pdf me-1"></i> Export PDF
+                                            Selesaikan Pembayaran
                                         </a>
 
                                         @else

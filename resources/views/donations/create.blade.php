@@ -176,7 +176,7 @@
 
                 <div class="card-body">
 
-                    <img src="{{ asset('storage/campaigns/'.$campaign->image) }}"
+                    <img src="{{ asset('storage/'.$campaign->image) }}"
                         class="img-fluid rounded mb-3 w-75 mx-auto d-block">
 
                     <p class="mb-1"><strong>Target Donasi</strong></p>
