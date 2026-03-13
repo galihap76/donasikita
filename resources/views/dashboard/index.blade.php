@@ -41,6 +41,8 @@
 <!-- Main page content-->
 <div class="container-xl px-4 mt-n10">
 
+    @if(Auth::user()->role == 'admin')
+
     <!-- Example Colored Cards for Dashboard Demo-->
     <div class="row">
         <div class="col-lg-3 col-xl-3 mb-4">
@@ -49,7 +51,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-white-75 small">Total Donasi Hari Ini </div>
-                            <div class="text-lg fw-bold">Rp 0</div>
+                            <div class="text-lg fw-bold">Rp {{ number_format($totalDonations, 0, ',', '.') }}</div>
                         </div>
                         <i class="bi bi-cash-stack text-white-50" style="font-size: 30px;"></i>
                     </div>
@@ -64,7 +66,7 @@
                         <div class="me-3">
                             <div class="text-white-75 small">
                                 Jumlah Donasi Hari Ini</div>
-                            <div class="text-lg fw-bold">0
+                            <div class="text-lg fw-bold">{{ $countDonations }}
                             </div>
                         </div>
                         <i class="bi bi-receipt text-white-50" style="font-size: 30px;"></i>
@@ -79,7 +81,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
                             <div class="text-white-75 small">Jumlah Kampanye </div>
-                            <div class="text-lg fw-bold">5
+                            <div class="text-lg fw-bold">{{ $countCampaigns }}
                             </div>
                         </div>
                         <i class="bi bi-megaphone text-white-50" style="font-size: 30px;"></i>
@@ -95,7 +97,7 @@
                         <div class="me-3">
                             <div class="text-white-75 small">Jumlah Pengguna
                             </div>
-                            <div class="text-lg fw-bold">7
+                            <div class="text-lg fw-bold">{{ $countUsers }}
                             </div>
                         </div>
                         <i class="bi bi-people text-white-50" style="font-size: 30px;"></i>
@@ -107,12 +109,13 @@
 
     <!-- Area chart example-->
     <div class="card mb-4">
-        <div class="card-header">Grafik Penjualan Bulanan</div>
+        <div class="card-header">Grafik Donasi Bulanan</div>
         <div class="card-body">
             <div class="chart-area"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
         </div>
-        <div class="card-footer small text-muted"> Data penjualan tahun {{ date('Y') }}.</div>
+        <div class="card-footer small text-muted"> Data donasi tahun {{ date('Y') }}.</div>
     </div>
+    @endif
 
 </div>
 @endsection

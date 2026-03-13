@@ -1,0 +1,80 @@
+* {
+    scroll-behavior: smooth;
+}
+
+section {
+    padding-top: 5rem;
+}
+
+.acme-regular {
+    font-family: "Acme", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+footer {
+    background-color: black;
+}
+
+.owl-prev,
+.owl-next {
+    display: none;
+}
+
+.playwrite-mx-ca {
+    font-family: "Playwrite MX", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.hero-section {
+    margin-top: 10px;
+}
+
+.floating {
+    animation: float 3s ease-in-out infinite;
+}
+
+.blinking-cursor {
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .navbar-nav .nav-item {
+        display: inline-block;
+        float: none;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 10px 15px;
+    }
+}

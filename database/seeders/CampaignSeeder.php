@@ -75,7 +75,7 @@ class CampaignSeeder extends Seeder
                 'description' => $campaign['description'],
                 'target_amount' => $campaign['target_amount'],
                 'collected_amount' => 0,
-                'image' => $campaign['image'],
+                'image' => 'campaigns/' . $campaign['image'],
                 'status' => 'active',
                 'created_at' => now(),
                 'updated_at' => now(),

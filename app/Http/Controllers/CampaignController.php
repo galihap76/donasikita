@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -87,9 +88,16 @@ class CampaignController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        // Menyusul
+        $campaign = Campaign::where('slug', $slug)->firstOrFail();
+
+        $donations = Donation::with('user')
+            ->where('campaign_id', $campaign->campaign_id)
+            ->where('status', 'success')
+            ->get();
+
+        return view('campaigns.show', compact('campaign', 'donations'));
     }
 
     /**
@@ -179,5 +187,21 @@ class CampaignController extends Controller
 
         Session::flash('success', 'Berhasil menghapus kampanye.');
         return redirect('/campaigns');
+    }
+
+    public function listCampaigns()
+    {
+
+        $campaigns = Campaign::select(
+            'title',
+            'image',
+            'slug',
+            'target_amount',
+            'collected_amount',
+            'created_at'
+        )
+            ->simplePaginate(6);
+
+        return view('campaigns.list-campaigns', compact('campaigns'));
     }
 }

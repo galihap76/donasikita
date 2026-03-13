@@ -142,7 +142,7 @@ class DonationController extends Controller
         }
     }
 
-    public function donationHistory()
+    public function donationHistories()
     {
         $user_id = Auth::user()->id;
 
@@ -161,6 +161,6 @@ class DonationController extends Controller
             ->where('status', 'success')
             ->sum('amount');
 
-        return view('donations.donation-history', compact('donationHistories', 'sumDonations'));
+        return view('donations.donation-histories', compact('donationHistories', 'sumDonations'));
     }
 }
