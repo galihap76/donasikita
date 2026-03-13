@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container-xl px-4">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
         <div class="col-lg-5">
 
             <!-- Basic Pendaftaran form-->
@@ -45,6 +45,21 @@
                             <p class="mt-3" style="font-size: 15px; color:red;"><i
                                     class="bi bi-exclamation-octagon-fill"></i>
                                 {{ucfirst($errors->first('email'))}}
+                            </p>
+                            @endif
+                        </div>
+
+                        <!-- Form Group (phone number)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="phone_number">No Telepon</label>
+                            <input class="form-control @error('phone_number') is-invalid @enderror" id="phone_number"
+                                name="phone_number" type="text" placeholder="Cth: +628xxxx" required autocomplete="off"
+                                value="{{ old('phone_number') }}" />
+
+                            @if ($errors->has('phone_number'))
+                            <p class="mt-3" style="font-size: 15px; color:red;"><i
+                                    class="bi bi-exclamation-octagon-fill"></i>
+                                {{ucfirst($errors->first('phone_number'))}}
                             </p>
                             @endif
                         </div>
