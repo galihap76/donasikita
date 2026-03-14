@@ -81,6 +81,14 @@ DB_DATABASE=laravel
 DB_USERNAME=root
 DB_PASSWORD=
 
+# Sesuaikan konfigurasi Mail agar bisa kirim email
+
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=
+MAIL_PASSWORD=
+
 # Sesuaikan konfigurasi Mayar
 
 MAYAR_BASE_URL=
