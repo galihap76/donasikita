@@ -111,6 +111,35 @@
                                     </div>
 
 
+                                    <!-- Status -->
+                                    <div class="mb-3">
+                                        <label for="status" class="form-label">Status</label>
+                                        <select class="form-select @error('status') is-invalid @enderror" id="status"
+                                            name="status" required>
+
+                                            <option value="">- Pilih Status -</option>
+
+                                            <option value="active" {{ old('status', $campaign->status) == 'active' ?
+                                                'selected' : '' }}>
+                                                Aktif
+                                            </option>
+
+                                            <option value="closed" {{ old('status', $campaign->status) == 'closed' ?
+                                                'selected' : '' }}>
+                                                Nonaktif
+                                            </option>
+
+                                        </select>
+
+                                        @if ($errors->has('status'))
+                                        <p class="mt-3" style="font-size: 15px; color:red;">
+                                            <i class="bi bi-exclamation-octagon-fill"></i>
+                                            {{ ucfirst($errors->first('status')) }}
+                                        </p>
+                                        @endif
+                                    </div>
+
+
                                     <!-- Deskripsi -->
                                     <div class="mb-3">
                                         <label for="description" class="form-label">Deskripsi</label>

@@ -36,9 +36,11 @@ class DonationController extends Controller
 
     public function create($slug)
     {
-        $campaign = Campaign::where('slug', $slug)->first();
+        $campaign = Campaign::where('slug', $slug)
+            ->where('status', 'active')
+            ->first();
 
-        if ($campaign) {
+        if ($campaign && $campaign->status == 'active') {
             return view('donations.create', compact('campaign'));
         } else {
             abort(404);
