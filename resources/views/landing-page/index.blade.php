@@ -605,15 +605,6 @@
                 <div class="col">
                     <p>© {{ date('Y') }} Copyright {{ env('APP_NAME') }}. All Rights Reserved.</p>
 
-                    <div class="d-flex flex-wrap justify-content-center gap-2 mb-2">
-                        <a href="{{ url('/terms-of-service') }}" class="text-white text-decoration-underline"
-                            target="_blank">Syarat & Ketentuan</a>
-                        <a href="{{ url('/privacy-policy') }}" class="text-white text-decoration-underline"
-                            target="_blank">Kebijakan Privasi</a>
-                        <a href="{{ url('/disclaimer') }}" class="text-white text-decoration-underline"
-                            target="_blank">Disclaimer</a>
-                    </div>
-
                     <p class="mb-0 mt-3">
                         Developed by
                         <a href="https://galihdev.my.id/" class="text-white fw-bold text-decoration-underline"

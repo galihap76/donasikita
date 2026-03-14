@@ -41,10 +41,11 @@ Route::middleware('auth')->group(function () {
             ->middleware('user')
             ->name('donations.create');
 
+        Route::get('/donation-histories', 'donationHistories');
+        Route::get('/invoice/{transaction_id}', 'invoice');
+
         Route::post('/campaigns/{slug}/donate', [DonationController::class, 'store'])
             ->name('donations.store');
-
-        Route::get('/donation-histories', 'donationHistories');
     });
 
     Route::get('/email/verify', function () {
@@ -146,7 +147,10 @@ Route::middleware('guest')->group(function () {
 });
 
 // Public route
-Route::get('/', [LandingPageController::class, 'index']);
+Route::controller(LandingPageController::class)->group(function () {
+    Route::get('/', 'index');
+});
+
 Route::post('/add-message', [ContactController::class, 'store']);
 Route::get('/list-campaigns', [CampaignController::class, 'listCampaigns']);
 Route::get('campaigns/{slug}', [CampaignController::class, 'show'])

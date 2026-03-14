@@ -105,20 +105,20 @@ class DonationController extends Controller
                         $donation = Donation::create([
                             'user_id' => $user_id,
                             'campaign_id' => $campaign->campaign_id,
-                            'amount' => $amount,
+                            'amount' => (int)$amount,
                             'message' => $message,
                             'is_anonymous' => $isAnonymous,
                             'status' => 'pending',
                             'payment_reference' => 'Mayar'
                         ]);
 
-                        $response = Http::withToken(env('MAYAR_API_KEY'))
-                            ->post('https://api.mayar.club/hl/v1/payment/create', [
+                        $response = Http::withToken(config('mayar.api_key'))
+                            ->post(config('mayar.base_url') . '/hl/v1/payment/create', [
                                 'name' => ucwords(Auth::user()->name),
                                 'email' => Auth::user()->email,
-                                'amount' => $amount,
-                                'mobile' => '085848672686',
-                                'redirectUrl' => 'https://hayes-sustenanceless-unfitly.ngrok-free.dev/donation-histories',
+                                'amount' => (int)$amount,
+                                'mobile' => Auth::user()->phone_number,
+                                'redirectUrl' => env('APP_URL') . '/' . 'donation-histories',
                                 'description' => 'Donasi ' . ucwords($campaign->description),
                                 'expiredAt' => $expiredAt
                             ]);
@@ -150,10 +150,12 @@ class DonationController extends Controller
             'campaigns.title',
             'donations.amount',
             'donations.status',
+            'payments.transaction_id',
             'donations.created_at'
         )
             ->where('donations.user_id', $user_id)
             ->join('campaigns', 'donations.campaign_id', '=', 'campaigns.campaign_id')
+            ->join('payments', 'donations.donation_id', '=', 'payments.donation_id')
             ->orderBy('donations.created_at', 'DESC')
             ->get();
 
@@ -162,5 +164,24 @@ class DonationController extends Controller
             ->sum('amount');
 
         return view('donations.donation-histories', compact('donationHistories', 'sumDonations'));
+    }
+
+    public function invoice(string $transaction_id)
+    {
+
+        if (Payment::where('transaction_id', $transaction_id)->exists()) {
+
+            $url = config('mayar.base_url') . '/hl/v1/invoice/' . $transaction_id;
+
+            $response = Http::withToken(config('mayar.api_key'))
+                ->get($url);
+
+            $data = json_decode($response, true);
+            $redirectPayment = $data['data']['paymentUrl'];
+
+            return redirect($redirectPayment);
+        } else {
+            abort(404);
+        }
     }
 }

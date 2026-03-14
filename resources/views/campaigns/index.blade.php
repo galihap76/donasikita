@@ -39,6 +39,10 @@
 
                 <div class="card-body">
 
+                    <a href="{{ url('/list-campaigns') }}" class="btn btn-dark mb-3"><i
+                            class="bi bi-journal-text me-1"></i>
+                        Lihat Lengkap</a>
+
                     @if(Auth::user()->role == 'admin')
                     <a href="{{ route('campaigns.create') }}" class="btn btn-success mb-4"><i
                             class="bi bi-plus-circle me-1"></i> Tambah Kampanye</a>
