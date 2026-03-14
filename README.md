@@ -1,4 +1,4 @@
-## DonasiKita
+## ❤️ DonasiKita
 
 DonasiKita adalah platform donasi digital yang memudahkan siapa saja untuk berbagi kebaikan.
 Melalui sistem yang transparan dan aman, DonasiKita menghubungkan para donatur dengan
@@ -7,7 +7,7 @@ berbagai kampanye sosial, kemanusiaan, dan kebutuhan masyarakat yang membutuhkan
 DonasiKita menggunakan layanan payment gateway <a href="https://mayar.id/">Mayar</a> untuk memproses pembayaran donasi secara aman dan terpercaya.
 Pada DonasiKita teknologi yang dipakai menggunakan Laravel 12, MySQL, dan Boostrap.
 
-## Fitur Sistem DonasiKita
+## 📱 Fitur Sistem DonasiKita
 
 **Admin**
 
@@ -33,7 +33,7 @@ Pada DonasiKita teknologi yang dipakai menggunakan Laravel 12, MySQL, dan Boostr
 
 5. Mengubah nama profil dan kata sandi akun
 
-## Install
+## ⚙️ Install
 
 1. Lakukan git clone :
 
@@ -113,10 +113,14 @@ php artisan serve
 
 11. Selesai!
 
-## Demo
+## 🌐 Demo Live Web
 
 Untuk demo, silahkan kunjung pada link : <a href="https://donasikita.web.id">https://donasikita.web.id</a>
 
 ## Penutup
 
-Selesai
+Semoga website ini dapat menjadi inspirasi dalam pengembangan platform donasi digital yang bermanfaat dan memberikan dampak positif bagi masyarakat.
+
+<hr/>
+
+**<p align="center">Made With ❤️ Love Galih Anggoro Prasetya</p>**
