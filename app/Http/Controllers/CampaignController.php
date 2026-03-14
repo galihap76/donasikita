@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Campaign;
 use App\Models\Donation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -17,14 +18,31 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::select(
-            'campaign_id',
-            'title',
-            'slug',
-            'target_amount',
-            'collected_amount',
-            'status'
-        )->get();
+
+        $role = Auth::user()->role;
+
+        if ($role == 'admin') {
+            $campaigns = Campaign::select(
+                'campaign_id',
+                'title',
+                'slug',
+                'target_amount',
+                'collected_amount',
+                'status'
+            )->get();
+        } else if ($role == 'user') {
+
+            $campaigns = Campaign::select(
+                'campaign_id',
+                'title',
+                'slug',
+                'target_amount',
+                'collected_amount',
+                'status'
+            )
+                ->where('status', 'active')
+                ->get();
+        }
 
         return view('campaigns.index', compact('campaigns'));
     }
@@ -46,7 +64,7 @@ class CampaignController extends Controller
             $request->all(),
             [
                 'title' => 'required|max:100',
-                'target_amount' => 'required|numeric',
+                'target_amount' => 'required|numeric|digits_between:1,15',
                 'image' => 'required|extensions:png,jpg,jpeg|mimes:png,jpg,jpeg',
                 'description' => 'required'
             ],
@@ -56,6 +74,7 @@ class CampaignController extends Controller
 
                 'target_amount.required' => 'Target donasi tidak boleh kosong.',
                 'target_amount.numeric' => 'Target donasi harus berupa angka.',
+                'target_amount.digits_between' => 'Jumlah target donasi terlalu besar.',
 
                 'image.required' => 'Gambar kampanye wajib diupload.',
                 'image.extensions' => 'Format gambar harus png, jpg, atau jpeg.',
@@ -90,14 +109,20 @@ class CampaignController extends Controller
      */
     public function show(string $slug)
     {
-        $campaign = Campaign::where('slug', $slug)->firstOrFail();
+        $campaign = Campaign::where('slug', $slug)
+            ->where('status', 'active')
+            ->first();
 
-        $donations = Donation::with('user')
-            ->where('campaign_id', $campaign->campaign_id)
-            ->where('status', 'success')
-            ->get();
+        if ($campaign && $campaign->status == 'active') {
+            $donations = Donation::with('user')
+                ->where('campaign_id', $campaign->campaign_id)
+                ->where('status', 'success')
+                ->get();
 
-        return view('campaigns.show', compact('campaign', 'donations'));
+            return view('campaigns.show', compact('campaign', 'donations'));
+        } else {
+            abort(404);
+        }
     }
 
     /**
@@ -121,8 +146,9 @@ class CampaignController extends Controller
             $request->all(),
             [
                 'title' => 'required|max:100',
-                'target_amount' => 'required|numeric',
+                'target_amount' => 'required|numeric|digits_between:1,15',
                 'image' => 'nullable|extensions:png,jpg,jpeg|mimes:png,jpg,jpeg',
+                'status' => 'required|in:active,closed',
                 'description' => 'required'
             ],
             [
@@ -131,9 +157,13 @@ class CampaignController extends Controller
 
                 'target_amount.required' => 'Target donasi tidak boleh kosong.',
                 'target_amount.numeric' => 'Target donasi harus berupa angka.',
+                'target_amount.digits_between' => 'Jumlah target donasi terlalu besar.',
 
                 'image.extensions' => 'Format gambar harus png, jpg, atau jpeg.',
                 'image.mimes' => 'File gambar harus bertipe png, jpg, atau jpeg.',
+
+                'status.required' => 'Status tidak boleh kosong.',
+                'status.in' => 'Pilih status yang tersedia.',
 
                 'description.required' => 'Deskripsi kampanye tidak boleh kosong.'
             ]
@@ -162,6 +192,7 @@ class CampaignController extends Controller
                 'slug' => Str::slug(trim($request->input('title')), '-'),
                 'target_amount' => (int)$request->input('target_amount'),
                 'image' => $imagePath,
+                'status' => $request->input('status'),
                 'description' => trim($request->input('description'))
             ]);
 
@@ -200,6 +231,7 @@ class CampaignController extends Controller
             'collected_amount',
             'created_at'
         )
+            ->where('status', 'active')
             ->simplePaginate(6);
 
         return view('campaigns.list-campaigns', compact('campaigns'));
