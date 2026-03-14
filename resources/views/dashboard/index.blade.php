@@ -126,7 +126,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="me-3">
-                            <div class="text-white-75 small">Total Donasi Anda </div>
+                            <div class="text-white-75 small">Total Donasi Disalurkan </div>
                             <div class="text-lg fw-bold">Rp {{ number_format($totalDonations, 0, ',', '.') }}</div>
                         </div>
                         <i class="bi bi-cash-stack text-white-50" style="font-size: 30px;"></i>

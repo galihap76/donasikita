@@ -80,8 +80,8 @@
                                     <div class="d-flex justify-content-center">
 
                                         @if($item->status == 'pending')
-                                        <a href="#" class="btn btn-danger">
-                                            Selesaikan Pembayaran
+                                        <a href="{{ url('/invoice', $item->transaction_id) }}" class="btn btn-danger">
+                                            <i class="bi bi-credit-card me-1"></i> Selesaikan Pembayaran
                                         </a>
 
                                         @else
