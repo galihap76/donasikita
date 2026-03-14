@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@donasikita.web.id',
             'password' => Hash::make('password'),
-            'phone_number' => '+6285848672686',
+            'phone_number' => '+6285803564186',
             'role' => 'admin'
         ]);
     }
