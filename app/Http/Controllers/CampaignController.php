@@ -46,7 +46,7 @@ class CampaignController extends Controller
             $request->all(),
             [
                 'title' => 'required|max:100',
-                'target_amount' => 'required|numeric',
+                'target_amount' => 'required|numeric|digits_between:1,15',
                 'image' => 'required|extensions:png,jpg,jpeg|mimes:png,jpg,jpeg',
                 'description' => 'required'
             ],
@@ -56,6 +56,7 @@ class CampaignController extends Controller
 
                 'target_amount.required' => 'Target donasi tidak boleh kosong.',
                 'target_amount.numeric' => 'Target donasi harus berupa angka.',
+                'target_amount.digits_between' => 'Jumlah target donasi terlalu besar.',
 
                 'image.required' => 'Gambar kampanye wajib diupload.',
                 'image.extensions' => 'Format gambar harus png, jpg, atau jpeg.',
@@ -121,7 +122,7 @@ class CampaignController extends Controller
             $request->all(),
             [
                 'title' => 'required|max:100',
-                'target_amount' => 'required|numeric',
+                'target_amount' => 'required|numeric|digits_between:1,15',
                 'image' => 'nullable|extensions:png,jpg,jpeg|mimes:png,jpg,jpeg',
                 'description' => 'required'
             ],
@@ -131,6 +132,7 @@ class CampaignController extends Controller
 
                 'target_amount.required' => 'Target donasi tidak boleh kosong.',
                 'target_amount.numeric' => 'Target donasi harus berupa angka.',
+                'target_amount.digits_between' => 'Jumlah target donasi terlalu besar.',
 
                 'image.extensions' => 'Format gambar harus png, jpg, atau jpeg.',
                 'image.mimes' => 'File gambar harus bertipe png, jpg, atau jpeg.',

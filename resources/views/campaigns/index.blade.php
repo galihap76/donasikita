@@ -39,12 +39,13 @@
 
                 <div class="card-body">
 
-                    <a href="{{ url('/list-campaigns') }}" class="btn btn-dark mb-3"><i
+                    <a href="{{ url('/list-campaigns') }}"
+                        class="btn btn-dark mb-3 {{ Auth::user()->role == 'admin' ? 'me-2' : '' }}"><i
                             class="bi bi-journal-text me-1"></i>
                         Lihat Lengkap</a>
 
                     @if(Auth::user()->role == 'admin')
-                    <a href="{{ route('campaigns.create') }}" class="btn btn-success mb-4"><i
+                    <a href="{{ route('campaigns.create') }}" class="btn btn-success mb-3"><i
                             class="bi bi-plus-circle me-1"></i> Tambah Kampanye</a>
                     @endif
 
@@ -92,7 +93,7 @@
                                             @csrf
                                             @method('DELETE')
 
-                                            <a href="{{ route('campaigns.show', $item->campaign_id) }}"
+                                            <a href="{{ route('campaigns.show', $item->slug) }}"
                                                 class="btn btn-primary">
                                                 <i class="bi bi-eye-fill me-1"></i> Lihat
                                             </a>
