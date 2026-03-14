@@ -123,4 +123,4 @@ Semoga website ini dapat menjadi inspirasi dalam pengembangan platform donasi di
 
 <hr/>
 
-**<p align="center">Made With ❤️ Love Galih Anggoro Prasetya</p>**
+**<p align="center">Made With ❤️ By Galih Anggoro Prasetya</p>**
