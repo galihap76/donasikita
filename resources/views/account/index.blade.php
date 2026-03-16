@@ -70,7 +70,7 @@
                         <div class="mb-3">
                             <label class="small mb-1" for="phone_number">No Telepon</label>
                             <input class="form-control @error('phone_number') is-invalid @enderror" id="phone_number"
-                                name="phone_number" type="number" value="{{ Auth::user()->phone_number }}" disabled />
+                                name="phone_number" type="text" value="{{ Auth::user()->phone_number }}" disabled />
                         </div>
 
                         <!-- Form Group (password)-->
